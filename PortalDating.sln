@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29230.47
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortalDating.API", "PortalDating.API\PortalDating.API.csproj", "{84F2D3F8-0E56-4B48-A190-2C68591C1503}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{84F2D3F8-0E56-4B48-A190-2C68591C1503}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84F2D3F8-0E56-4B48-A190-2C68591C1503}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84F2D3F8-0E56-4B48-A190-2C68591C1503}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84F2D3F8-0E56-4B48-A190-2C68591C1503}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {135BF408-85EA-4222-BF2F-44FCD38ED615}
+	EndGlobalSection
+EndGlobal
