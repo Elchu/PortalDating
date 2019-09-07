@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using PortalDating.API.Data;
+using PortalDating.API.Models;
 
 namespace PortalDating.API.Controllers
 {
@@ -10,36 +13,61 @@ namespace PortalDating.API.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        // GET api/values
+        private readonly DataContext _dbContext;
+
+        public ValuesController(DataContext dbContextContext)
+        {
+            _dbContext = dbContextContext;
+        }
+
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public async Task<IActionResult> Get()
         {
-            return new string[] { "value1", "value2", "value3" };
+            return Ok(await _dbContext.Values.ToListAsync());
         }
 
-        // GET api/values/5
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            return "value";
+            return Ok(await _dbContext.Values.FirstOrDefaultAsync(v => v.Id.Equals(id)));
         }
 
-        // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] Value value)
         {
+            await _dbContext.Values.AddAsync(value);
+            await _dbContext.SaveChangesAsync();
+            return Ok(value);
         }
 
-        // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put(int id, [FromBody] Value value)
         {
+            var valueResult = await _dbContext.Values.FirstOrDefaultAsync(v => v.Id.Equals(id));
+
+            if (valueResult == null)
+                return NoContent();
+
+            valueResult.Name = value.Name;
+
+            _dbContext.Values.Update(valueResult);
+            await _dbContext.SaveChangesAsync();
+
+            return Ok(valueResult);
         }
 
-        // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+            var value = await _dbContext.Values.FirstOrDefaultAsync(v => v.Id.Equals(id));
+
+            if (value == null)
+                return NoContent();
+
+            _dbContext.Values.Remove(value);
+            await _dbContext.SaveChangesAsync();
+
+            return Ok(value);
         }
     }
 }
