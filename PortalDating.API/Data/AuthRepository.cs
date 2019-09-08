@@ -25,12 +25,16 @@ namespace PortalDating.API.Data
             return AuthManager.VeryfiPasswordHash(user.PasswordHash, user.PasswordSalt, password) ? user : null;
         }
 
-        public async Task<User> Register(User user, string password)
+        public async Task<User> Register(string username, string password)
         {
             AuthManager.CreatePasswordHashSalt(password, out var passwordHash, out var passwordSalt);
 
-            user.PasswordHash = passwordHash;
-            user.PasswordSalt = passwordSalt;
+            var user = new User()
+            {
+                Username = username,
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt
+            };
 
             await _dbContext.Users.AddAsync(user);
             await _dbContext.SaveChangesAsync();
