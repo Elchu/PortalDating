@@ -1,6 +1,8 @@
 ﻿using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using PortalDating.API.Models;
+using PortalDating.API.Utils;
 
 namespace PortalDating.API.Data
 {
@@ -12,14 +14,20 @@ namespace PortalDating.API.Data
         {
             _dbContext = dataContext;
         }
-        public Task<User> Login(string username, string password)
+
+        public async Task<User> Login(string username, string password)
         {
-            throw new System.NotImplementedException();
+            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Username.Equals(username));
+
+            if (user == null)
+                return null;
+
+            return AuthManager.VeryfiPasswordHash(user.PasswordHash, user.PasswordSalt, password) ? user : null;
         }
 
         public async Task<User> Register(User user, string password)
         {
-            CreatePasswordHashSalt(password, out var passwordHash, out var passwordSalt);
+            AuthManager.CreatePasswordHashSalt(password, out var passwordHash, out var passwordSalt);
 
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
@@ -30,18 +38,9 @@ namespace PortalDating.API.Data
             return user;
         }
 
-        public Task<bool> UserExists(string username)
+        public async Task<bool> UserExists(string username)
         {
-            throw new System.NotImplementedException();
-        }
-
-        private void CreatePasswordHashSalt(string password, out byte[] passwordHash, out byte[] passwordSalt)
-        {
-            using (var hmac = new System.Security.Cryptography.HMACSHA512())
-            {
-                passwordHash = hmac.Key;
-                passwordSalt = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-            }
+            return await _dbContext.Users.AnyAsync(u => u.Username.Equals(username)) ? true : false;
         }
     }
 }
