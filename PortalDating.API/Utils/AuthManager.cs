@@ -12,8 +12,8 @@ namespace PortalDating.API.Utils
         {
             using (var hmac = new System.Security.Cryptography.HMACSHA512())
             {
-                passwordHash = hmac.Key;
-                passwordSalt = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+                passwordSalt = hmac.Key;
+                passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
             }
         }
 
