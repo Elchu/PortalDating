@@ -22,7 +22,7 @@ namespace PortalDating.API.Controllers
             _dbContext = dbContextContext;
         }
 
-        [AllowAnonymous]
+        
         [HttpGet]
         public async Task<IActionResult> Get()
         {
