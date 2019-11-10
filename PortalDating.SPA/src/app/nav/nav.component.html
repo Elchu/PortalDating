@@ -17,7 +17,6 @@
     <form #loginForm="ngForm" class="form-inline mt-2 mt-md-0" (ngSubmit)="login()">
       <input class="form-control mr-sm-2" type="text" placeholder="Użytkownik" name="username" [(ngModel)]="model.username" required />
       <input class="form-control mr-sm-2" type="text" placeholder="Hasło" name="password" [(ngModel)]="model.password" required />
-      <!-- <button [disabled]="!loginForm.valid" class="btn btn-outline-success my-2 my-sm-0" type="submit">Zaloguj</button> -->
       <button [disabled]="!loginForm.valid" class="btn btn-outline-success my-2 my-sm-0" type="submit">Zaloguj</button>
     </form>
 </nav>
